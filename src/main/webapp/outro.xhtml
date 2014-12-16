@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core">
+ 
+<f:view>
+  <f:metadata>
+    <!-- Start a new process instance. The Process Definition Key is read internally from
+         request parameters and cached in the CDI conversation scope.
+    -->
+    <f:event type="preRenderView" listener="#{camundaTaskForm.startProcessInstanceByKeyForm()}" />
+  </f:metadata>
+  <h:head>
+    <title>Place Order</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <!-- CSS Stylesheets -->
+  <h:outputStylesheet library="webjars/bootstrap/3.1.1/css" name="bootstrap.min.css"/>
+  <h:outputStylesheet library="css" name="style.css"/>
+
+  <!-- Javascript Libraries -->
+  <h:outputScript type="text/javascript" library="webjars/bootstrap/3.1.1/js" name="bootstrap.min.js" />
+  </h:head>
+  <h:body>
+ 
+    <div class="container">
+	<div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="well well-sm">
+        
+    <h:form id="submitForm" class="form-horizontal">
+              <fieldset>
+    <legend class="text-center">Order your pizza</legend>
+
+        <div class="form-group">
+          <label class="col-md-3 control-label" for="pizza">Pizza</label>
+          <h:selectOneMenu id="pizza" value="#{processVariables['pizza']}" class="form-control" >
+              <f:selectItem itemValue="Margarita" itemLabel="Margarita"/>
+              <f:selectItem itemValue="Salami" itemLabel="Salami"/>
+              <f:selectItem itemValue="Tonno" itemLabel="Tonno"/>
+              <f:selectItem itemValue="Prosciutto" itemLabel="Prosciutto"/>
+          </h:selectOneMenu>
+        </div>
+        
+        <div class="form-group">
+          <label class="col-md-3 control-label" for="customer">Customer</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="customer" value="#{processVariables['customer']}" required="true" class="form-control" />
+        </div>
+        
+        <div class="form-group">
+          <label class="col-md-3 control-label" for="address">Address</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="address" value="#{processVariables['address']}" required="true" class="form-control" />
+        </div>
+         
+      <!-- The button starts a new process instance. This ends the conversation and redirects us to the tasklist.
+ 
+           NOTE: Syntax is different when working on user task forms, see file "approveLoanRequest.xhtml".
+      -->
+      <h:commandButton id="submit_button" value="Order Pizza" action="#{camundaTaskForm.completeProcessInstanceForm()}" />
+ 
+      <h:messages style="color:red;margin:8px;" />
+      </fieldset>
+    </h:form>
+    </div>
+    </div>
+    </div>
+    </div>
+  </h:body>
+</f:view>
+</html>

@@ -1,10 +1,10 @@
-<!DOCTYPE HTML>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:ui="http://java.sun.com/jsf/facelets"
-  xmlns:h="http://java.sun.com/jsf/html"
-  xmlns:f="http://java.sun.com/jsf/core">
- 
-<f:view>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" 
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/template.xhtml">
   <f:metadata>
     <!-- Start working on a task. Task Id is read internally from
          request parameters and cached in the CDI conversation scope.
@@ -12,22 +12,26 @@
  
     <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
   </f:metadata>
-  <h:head>
-    <title>Prepare Pizza</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+	<ui:define name="title">Prepare Pizza</ui:define>
+	<ui:define name="description">Please prepare the pizza to client</ui:define>
 
-  <!-- CSS Stylesheets -->
-  <h:outputStylesheet library="webjars/bootstrap/3.1.1/css" name="bootstrap.css"/>
-  <h:outputStylesheet library="css" name="style.css"/>
+<ui:define name="content">
 
-  <!-- Javascript Libraries -->
-  <h:outputScript type="text/javascript" library="webjars/bootstrap/3.1.1/js" name="bootstrap.js" />
-  </h:head>
-  <h:body>
-    <h1>Please prepare pizza</h1>
-    <h:form id="submitForm">
-      <h:commandButton id="submit_button" value="Done" action="#{camundaTaskForm.completeTask()}" />
+    <h:form class="form-horizontal" role="form">
+
+        <h:messages globalOnly="true" errorClass="alert alert-danger" warnClass="alert alert-warning"
+                    infoClass="alert alert-info"/>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <h:commandButton type="submit" class="btn btn-primary" value="Done" action="#{camundaTaskForm.completeTask()}"/>
+            </div>
+        </div>
+        
     </h:form>
-  </h:body>
-</f:view>
-</html>
+</ui:define>
+
+
+</ui:composition>
+
