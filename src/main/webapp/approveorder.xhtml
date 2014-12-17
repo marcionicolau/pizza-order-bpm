@@ -1,37 +1,42 @@
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-xmlns:ui="http://java.sun.com/jsf/facelets"
-xmlns:h="http://java.sun.com/jsf/html"
-xmlns:f="http://java.sun.com/jsf/core">
- 
-<f:view>
-<f:metadata>
-  <!-- Start working on a task. Task Id is read internally from
-       request parameters and cached in the CDI conversation scope.
-  -->
- 
-  <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
-</f:metadata>
-<h:head>
-  <title>Approve Order</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/resources/template.xhtml">
 
-  <!-- CSS Stylesheets -->
-  <h:outputStylesheet library="webjars/bootstrap/3.1.1/css" name="bootstrap.min.css"/>
-  <h:outputStylesheet library="css" name="style.css"/>
+	<f:metadata>
+		<!-- Start working on a task. Task Id is read internally from
+       request parameters and cached in the CDI conversation scope. -->
 
-  <!-- Javascript Libraries -->
-  <h:outputScript type="text/javascript" library="webjars/bootstrap/3.1.1/js" name="bootstrap.min.js" />
-</h:head>
-<h:body>
-  <h1>Order:</h1>
-  <p>Customer: #{approveOrderController.orderEntity.customer}</p>
-  <p>Address: #{approveOrderController.orderEntity.address}</p>
-  <p>Pizza: #{approveOrderController.orderEntity.pizza}</p>
-  <h:form id="submitForm">
-    <h:outputLabel>Approve Order?</h:outputLabel>
-    <h:selectBooleanCheckbox value="#{approveOrderController.orderEntity.approved}"/><br/>
-    <h:commandButton id="submit_button" value="Approve Order" action="#{approveOrderController.submitForm()}" />
-  </h:form>
-</h:body>
-</f:view>
-</html>
+		<f:event type="preRenderView"
+			listener="#{camundaTaskForm.startTaskForm()}" />
+	</f:metadata>
+
+	<ui:define name="title">Customer Order Approval</ui:define>
+	<ui:define name="description">Check this new client order</ui:define>
+
+	<ui:define name="content">
+
+		<h:form>
+			<p:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				<p:outputLabel value="Customer: " />
+				<p:outputLabel
+					value="#{approveOrderController.orderEntity.customer}" />
+				<p:outputLabel value="Address: " />
+				<p:outputLabel value="#{approveOrderController.orderEntity.address}" />
+				<p:outputLabel value="Pizza: " />
+				<p:outputLabel value="#{approveOrderController.orderEntity.pizza}" />
+				
+				<p:outputLabel for="approveOrder" value="Approve Order?" />
+				<p:selectBooleanCheckbox
+					value="#{approveOrderController.orderEntity.approved}"
+					id="approveOrder" />
+			</p:panelGrid>
+
+			<p:commandButton value="Approve Order"
+				action="#{approveOrderController.submitForm()}" />
+		</h:form>
+	</ui:define>
+
+</ui:composition>
